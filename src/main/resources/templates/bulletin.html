@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bulletin.css">
+  <title>Community</title>
+  <script>
+
+  </script>
+
+</head>
+<body>
+<div class="container">
+  <h1>Community</h1>
+  <a href="/post">
+    <button>Create a Post!</button>
+  </a>
+
+  <div th:each="post : ${posts}" class="post">
+    <h2 th:text="${post.title}"></h2>
+    <p th:text="'Posted by ' + ${post.author} + ' on ' + ${#dates.format(post.postDate, 'yyyy-MM-dd')}"></p>
+    <p th:text="${post.content}"></p>
+  </div>
+
+  <div class="pagination">
+    <th:block th:if="${totalPages > 1}">
+      <th:block th:each="page : ${#numbers.sequence(currentPage - 4 <= 0 ? 1 : currentPage - 4, currentPage + 4 >= totalPages ? totalPages : currentPage + 4)}">
+        <a th:href="@{/board(page=${page})}" th:text="${page}" th:class="${page == currentPage} ? 'active' : ''"></a>
+      </th:block>
+    </th:block>
+  </div>
+
+</div>
+</body>
+</html>
