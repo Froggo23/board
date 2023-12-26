@@ -7,13 +7,11 @@ async function submitPost() {
 
     // Get values from the input fields
     const title = document.getElementById('title').value;
-    const author = document.getElementById('author').value;
     const content = document.getElementById('content').value;
 
     // Prepare the data to send
     const data = {
         title: title,
-        author: author,
         content: content
     };
 

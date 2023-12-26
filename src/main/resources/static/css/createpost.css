@@ -5,10 +5,7 @@ body {
     padding: 20px;
 }
 
-label {
-    display: block;
-    margin: 10px 0 5px;
-}
+
 
 input[type="text"], textarea {
     width: 100%;
@@ -16,25 +13,4 @@ input[type="text"], textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-}
-
-button {
-    background-color: #008CBA; /* Blue */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 2px;
-    cursor: pointer;
-    border-radius: 10px;
-    transition-duration: 0.4s;
-}
-
-button:hover {
-    background-color: white;
-    color: #008CBA;
-    border: 1px solid #008CBA;
 }

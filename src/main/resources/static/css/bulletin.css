@@ -1,6 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-}
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -13,29 +11,12 @@ body {
 }
 .post h2 {
     margin: 0;
+    text-align: left;
 }
 .post p {
     margin: 5px 0;
 }
-button {
-    background-color: #008CBA; /* Blue */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 2px;
-    cursor: pointer;
-    border-radius: 10px;
-    transition-duration: 0.4s;
-}
-button:hover {
-    background-color: white;
-    color: #008CBA;
-    border: 1px solid #008CBA;
-}
+
 
 .pagination {
   display: flex;
