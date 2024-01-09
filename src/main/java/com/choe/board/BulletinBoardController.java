@@ -22,8 +22,12 @@ public class BulletinBoardController {
     JdbcTemplate jdbcTemplate;
 
     @GetMapping("/board")
-    public String board(Model model,
-                        @RequestParam(name = "page", defaultValue = "1") int page) {
+    public String board(Model model, @RequestParam(name = "page", defaultValue = "1") int page, HttpServletRequest request) {
+        Cookie loginCookie = WebUtils.getCookie(request, "login_id");
+
+        if (loginCookie == null) {
+            return "redirect:/login";
+        }
         int count = 10;
         int start = (page - 1) * count;
         String sql = "select * from titan.posts ORDER BY post_date DESC limit " + start + ", " + count;
