@@ -30,7 +30,11 @@ async function submitPost() {
         if (response.ok && responseBody === "success") {
             alert('Post submitted successfully!');
             window.location.href = "/board";
-        } else {
+        } else if (response.ok && responseBody === "needs login") {
+            alert('Needs to login again!');
+            window.location.href = "/login";
+        }
+        else {
             alert('Error submitting post. Please try again.');
         }
     } catch (error) {

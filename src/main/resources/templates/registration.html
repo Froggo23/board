@@ -2,36 +2,36 @@
 <html>
 <head>
     <title>Cyberpunk Registration Page</title>
-    <link rel="stylesheet" type="text/css" href="/css/cyberpunk.css">
+    <link href="/css/cyberpunk.css" rel="stylesheet" type="text/css">
     <link href="/css/registration.css" rel="stylesheet">
+    <script src="/js/registration.js"></script>
 </head>
 <body>
 <div class="registration-container">
-    <form id="registrationForm">
-        <h2>Register</h2>
-        <div class="input-group">
-            <input type="text" id="username" required>
-            <label for="username">Username</label>
-        </div>
-        <div class="input-group">
-            <input type="password" id="password" required>
-            <label for="password">Password</label>
-        </div>
-        <div class="input-group">
-            <input type="password" id="confirmPassword" required>
-            <label for="confirmPassword">Confirm Password</label>
-        </div>
-        <div class="input-group">
-            <input type="email" id="email" required>
-            <label for="email">Email</label>
-        </div>
-        <div class="input-group">
-            <input type="text" id="phoneNumber" required>
-            <label for="phoneNumber">Phone Number</label>
-        </div>
-        <button type="submit" class="register-btn">Register</button>
-    </form>
+    <h2>Register</h2>
+    <div class="input-group">
+        <input id="username" onkeyup="validateUsername()" required type="text">
+        <span id="usernameStatus"></span>
+        <label for="username">Username</label>
+    </div>
+    <div class="input-group">
+        <input id="password" required type="password">
+        <label for="password">Password</label>
+    </div>
+    <div class="input-group">
+        <input id="confirmPassword" required type="password">
+        <label for="confirmPassword">Confirm Password</label>
+    </div>
+    <div class="input-group">
+        <input id="email" required type="email">
+        <label for="email">Email</label>
+    </div>
+    <div class="input-group">
+        <input id="phoneNumber" required type="text">
+        <label for="phoneNumber">Phone Number</label>
+    </div>
+    <button class="register-btn" onclick="submitRegi()" type="submit">Register</button>
 </div>
-<script src="registrationScript.js"></script>
+
 </body>
 </html>

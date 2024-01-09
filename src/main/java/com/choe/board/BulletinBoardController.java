@@ -2,14 +2,14 @@ package com.choe.board;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,12 +20,12 @@ public class BulletinBoardController {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    
+
     @GetMapping("/board")
     public String board(Model model,
                         @RequestParam(name = "page", defaultValue = "1") int page) {
         int count = 10;
-        int start = (page-1) * count;
+        int start = (page - 1) * count;
         String sql = "select * from titan.posts ORDER BY post_date DESC limit " + start + ", " + count;
 
         List<Post> postList = new ArrayList<>();
@@ -53,12 +53,17 @@ public class BulletinBoardController {
         model.addAttribute("currentPage", page);
         return "bulletin";
     }
+
     @GetMapping("/post")
-    public String post() {
+    public String post(HttpServletRequest request) {
+        Cookie loginCookie = WebUtils.getCookie(request, "login_id");
+
+        if (loginCookie == null) {
+            return "redirect:/login";
+        }
+
         return "createpost";
     }
-
-
 
 
 }

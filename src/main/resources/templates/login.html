@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cyberpunk Login Page</title>
-  <link href="/css/login.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/css/cyberpunk.css">
+    <title>Cyberpunk Login Page</title>
+    <link href="/css/login.css" rel="stylesheet">
+    <link href="/css/cyberpunk.css" rel="stylesheet" type="text/css">
+    <script src="/js/login.js"></script>
 </head>
 <body>
 <div class="login-container">
-  <form id="loginForm">
-    <h2>Login</h2>
-    <div class="input-group">
-      <input type="text" id="username" required>
-      <label for="username">Username</label>
-    </div>
-    <div class="input-group">
-      <input type="password" id="password" required>
-      <label for="password">Password</label>
-    </div>
-    <button type="submit" class="login-btn">Login</button>
-    <button type="button" class="register-btn">Register</button>
-  </form>
+    <form id="loginForm">
+        <h2>Login</h2>
+        <div class="input-group">
+            <input id="username" required type="text">
+            <label for="username">Username</label>
+        </div>
+        <div class="input-group">
+            <input id="password" required type="password">
+            <label for="password">Password</label>
+        </div>
+        <button class="login-btn" onclick=checkLogin() type="submit">Login</button>
+        <button class="register-btn" onclick="gotoRegi()" type="button">Register</button>
+    </form>
 </div>
 </body>
 </html>
