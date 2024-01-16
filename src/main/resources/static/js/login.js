@@ -29,7 +29,7 @@ async function checkLogin() {
     const responseBody = await response.text();
 
     if (response.ok && responseBody === "success") {
-        document.cookie = `login_id=${u}; expires=${new Date(Date.now() + 3 * 60 * 1000).toUTCString()}; path=/`;
+        document.cookie = `login_id=${u}; expires=${new Date(Date.now() + 30 * 60 * 1000).toUTCString()}; path=/`;
         alert('Login succeeded!');
         window.location.href = "/board";
     } else {

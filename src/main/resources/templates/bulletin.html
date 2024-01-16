@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/cyberpunk.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/bulletin.css">
-
+  <script src="/js/deletepost.js"></script>
   <title>Community</title>
   <script>
 
@@ -20,6 +20,7 @@
   </a>
 
   <div th:each="post : ${posts}" class="post">
+    <div class="delete-btn" onclick="deletePost(postId)">X</div>
     <h2 th:text="${post.title}"></h2>
     <p th:text="'Posted by ' + ${post.author} + ' on ' + ${#dates.format(post.postDate, 'yyyy-MM-dd')}"></p>
     <p th:text="${post.content}"></p>

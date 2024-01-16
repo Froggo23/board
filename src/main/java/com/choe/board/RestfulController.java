@@ -1,6 +1,7 @@
 package com.choe.board;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
@@ -130,5 +131,13 @@ public class RestfulController {
         return "success";
     }
 
+    // Inside your Spring controller class
+    @PostMapping("/delete-post")
+    public String deletePost(@RequestBody Post post, HttpServletRequest request) {
+        Integer postId = post.getId();
+        String sql = "DELETE FROM titan.posts WHERE id = " + post.getId();
+        jdbcTemplate.execute(sql);
+        return "success";
+    }
 
 }
