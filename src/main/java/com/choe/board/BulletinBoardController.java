@@ -37,22 +37,22 @@ public class BulletinBoardController {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 
         for (Map row : rows) {
-            Post obj = new Post();
+            Post post = new Post();
 
-            obj.setId(((Integer) row.get("id")));
-            obj.setTitle((String) row.get("title"));
-            obj.setAuthor((String) row.get("author"));
+            post.setId(((Integer) row.get("id")));
+            post.setTitle((String) row.get("title"));
+            post.setAuthor((String) row.get("author"));
             // Spring returns BigDecimal, need convert
-            obj.setPostDate((Date) row.get("post_date"));
-            obj.setContent(((String) row.get("content")));
-            postList.add(obj);
+            post.setPostDate((Date) row.get("post_date"));
+            post.setContent(((String) row.get("content")));
+            postList.add(post);
         }
 
         int totalPosts = jdbcTemplate.queryForObject("select count(*) from titan.posts", Integer.class);
         int totalPages = (int) Math.ceil((double) totalPosts / count);
 
 
-        model.addAttribute("posts", postList);
+        model.addAttribute("postList", postList);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
         return "bulletin";
@@ -61,12 +61,24 @@ public class BulletinBoardController {
     @GetMapping("/post")
     public String post(HttpServletRequest request) {
         Cookie loginCookie = WebUtils.getCookie(request, "login_id");
-
         if (loginCookie == null) {
             return "redirect:/login";
         }
 
         return "createpost";
+    }
+
+    @GetMapping("/edit")
+    public String edit(Model model, @RequestParam int postId, HttpServletRequest request) {
+        Cookie loginCookie = WebUtils.getCookie(request, "login_id");
+        if (loginCookie == null) {
+            return "redirect:/login";
+        }
+
+        String edittitle = "";
+        String editcontent = "";
+
+        return "editpost";
     }
 
 

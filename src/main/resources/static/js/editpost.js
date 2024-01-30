@@ -1,17 +1,17 @@
-function deletePost(buttonElement) {
+function editPost(buttonElement) {
     console.log(buttonElement)
     var postId = buttonElement.getAttribute('post-id');
     var postAuthor = buttonElement.getAttribute('post-author');
-    fetch('/delete-post', {
+    fetch('/edit-post', {
         method: 'POST', // or 'DELETE', depending on your server setup
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(
-        {
-            id: postId,
-            author: postAuthor
-        }
+            {
+                id: postId,
+                author: postAuthor
+            }
         ),
     })
         .then(response => response.text())  // Convert the response to text

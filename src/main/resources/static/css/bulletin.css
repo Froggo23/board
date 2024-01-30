@@ -17,7 +17,6 @@
     margin: 5px 0;
 }
 
-
 .pagination {
   display: flex;
   justify-content: center;
@@ -44,16 +43,15 @@
   color: white;
   border: 1px solid #4CAF50;
 }
-/* Style for delete button */
-.delete-btn {
-    top: 10px; /* Adjust as necessary for your layout */
-    right: 10px; /* Adjust as necessary for your layout */
-    width: 20px; /* Size of the button */
-    height: 20px; /* Size of the button */
-    float: right;
-    background-color: red;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    /* You may want to add more styles such as padding, margin, font-size, etc. */
+
+.delete-icon {
+    width: 30px; /* or any other size */
+    height: 30px; /* maintain aspect ratio */
+    float: right; /* this will align the icon to the right */
 }
+
+
+#postId {
+    display: none;
+}
+

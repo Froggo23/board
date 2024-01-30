@@ -134,7 +134,10 @@ public class RestfulController {
     // Inside your Spring controller class
     @PostMapping("/delete-post")
     public String deletePost(@RequestBody Post post, HttpServletRequest request) {
-        Integer postId = post.getId();
+        String loginIdCookieValue = WebUtils.getCookie(request, "login_id").getValue();
+        if (!loginIdCookieValue.equals(post.getAuthor())){
+            return "failed";
+        }
         String sql = "DELETE FROM titan.posts WHERE id = " + post.getId();
         jdbcTemplate.execute(sql);
         return "success";
