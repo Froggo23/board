@@ -17,6 +17,7 @@ function deletePost(buttonElement) {
         .then(response => response.text())  // Convert the response to text
         .then(text => {
         if (text === "success") {
+            window.alert('You deleted this post');
             // Remove the post element from the DOM
             location.reload();
         } else if (text === "failed") {

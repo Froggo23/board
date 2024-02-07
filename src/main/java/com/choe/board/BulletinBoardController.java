@@ -30,7 +30,7 @@ public class BulletinBoardController {
         }
         int count = 10;
         int start = (page - 1) * count;
-        String sql = "select * from titan.posts ORDER BY post_date DESC limit " + start + ", " + count;
+        String sql = "select * from titan.posts ORDER BY id DESC limit " + start + ", " + count;
 
         List<Post> postList = new ArrayList<>();
 
@@ -75,8 +75,13 @@ public class BulletinBoardController {
             return "redirect:/login";
         }
 
-        String edittitle = "";
-        String editcontent = "";
+        String sql = "select * from titan.posts where id =" + postId;
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        Post post = new Post();
+        Map<String, Object> row = rows.get(0);
+        post.setTitle((String) row.get("title"));
+        post.setContent(((String) row.get("content")));
+        model.addAttribute("post", post);
 
         return "editpost";
     }

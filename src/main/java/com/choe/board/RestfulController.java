@@ -143,4 +143,13 @@ public class RestfulController {
         return "success";
     }
 
+    @PostMapping("/is-editable")
+    public String isEditable(@RequestBody Post post, HttpServletRequest request) {
+        String loginIdCookieValue = WebUtils.getCookie(request, "login_id").getValue();
+        if (!loginIdCookieValue.equals(post.getAuthor())){
+            return "failed";
+        }
+        return "success";
+    }
+
 }

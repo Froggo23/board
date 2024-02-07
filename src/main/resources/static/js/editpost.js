@@ -2,7 +2,9 @@ function editPost(buttonElement) {
     console.log(buttonElement)
     var postId = buttonElement.getAttribute('post-id');
     var postAuthor = buttonElement.getAttribute('post-author');
-    fetch('/edit-post', {
+
+
+    fetch('/is-editable', {
         method: 'POST', // or 'DELETE', depending on your server setup
         headers: {
             'Content-Type': 'application/json',
@@ -17,13 +19,12 @@ function editPost(buttonElement) {
         .then(response => response.text())  // Convert the response to text
         .then(text => {
         if (text === "success") {
-            // Remove the post element from the DOM
-            location.reload();
+            window.location.href = "/edit?postId=" + postId;
         } else if (text === "failed") {
-            window.alert('Unauthorized: You do not have permission to delete this post');
+            window.alert('Unauthorized: You do not have permission to edit this post');
             // Handle unauthorized situation here
         } else {
-            console.error('Failed to delete post, server responded with:', text);
+            console.error('Failed to edit post, server responded with:', text);
             // Handle other server responses
         }
     })

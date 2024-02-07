@@ -6,6 +6,7 @@
     <link href="/css/cyberpunk.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/bulletin.css">
     <script src="/js/deletepost.js"></script>
+    <script src="/js/editpost.js"></script>
     <title>Community</title>
     <script>
 
@@ -21,7 +22,7 @@
 
     <div th:each="post : ${postList}" class="post">
         <img src="/img/deletebutton.png" th:post-id="${post.id}" th:post-author="${post.author}" onclick="deletePost(this)" class="delete-icon"/>
-        <img src="/img/editbutton.png" th:post-id="${post.id}" th:post-author="${post.author}" class="delete-icon"/>
+        <img src="/img/editbutton.png" th:post-id="${post.id}" th:post-author="${post.author}" onclick="editPost(this)" class="delete-icon"/>
         <h2 th:text="${post.title}"></h2>
         <p th:text="'Posted by ' + ${post.author} + ' on ' + ${#dates.format(post.postDate, 'yyyy-MM-dd')}"></p>
         <p th:text="${post.content}"></p>

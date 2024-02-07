@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Create a Post!</title>
+    <title>Edit the Post!</title>
     <link href="/css/cyberpunk.css" rel="stylesheet">
     <link href="/css/createpost.css" rel="stylesheet">
-
     <script src="/js/editpost.js"></script>
 </head>
 <body>
 
 <h2>Edit your Post!</h2>
 
+<!-- Use Thymeleaf to bind the title field -->
 <label for="title">Title:</label> <br>
-<input id="title" required type="text"> <br>
+<input id="title" name="title" required type="text" th:value="${post.title}"> <br>
+
+<!-- Use Thymeleaf to bind the content textarea -->
 <label for="content">Content:</label> <br>
-<textarea cols="30" id="content" required rows="10"> </textarea><br><br>
+<textarea cols="30" id="content" name="content" required rows="10" th:text="${post.content}"> </textarea><br><br>
+
 <button onclick="submitPost()">Submit</button>
 
 </body>
