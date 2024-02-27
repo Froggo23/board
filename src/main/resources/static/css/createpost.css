@@ -46,5 +46,10 @@ button[type="submit"]:hover {
     background-color: #008CBA; /* Darker shade for hover effect */
 }
 
+.delete-icon {
+    width: 30px; /* or any other size */
+    height: 30px; /* maintain aspect ratio */
+    float: right; /* this will align the icon to the right */
+}
 
 /* Ensure the above classes are used in the Thymeleaf template */

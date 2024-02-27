@@ -106,7 +106,7 @@ public class BulletinBoardController {
         model.addAttribute("post", post);
         model.addAttribute("postId", id);
 
-        String sql2 = "SELECT titan.comments.author, titan.comments.content, titan.comments.comment_date, titan.comments.is_edited FROM titan.comments JOIN titan.posts ON titan.comments.post_id = titan.posts.id WHERE titan.posts.id =" + id + " ORDER BY titan.comments.id DESC";
+        String sql2 = "SELECT titan.comments.id, titan.comments.author, titan.comments.content, titan.comments.comment_date, titan.comments.is_edited FROM titan.comments JOIN titan.posts ON titan.comments.post_id = titan.posts.id WHERE titan.posts.id =" + id + " ORDER BY titan.comments.id DESC";
 
         List<Comment> commentList = new ArrayList<>();
 
@@ -116,6 +116,7 @@ public class BulletinBoardController {
             Comment comment = new Comment();
 
             comment.setAuthor((String) row2.get("author"));
+            comment.setId((Integer) row2.get("id"));
             comment.setCommentDate((Date) row2.get("comment_date"));
             comment.setContent(((String) row2.get("content")));
             comment.setEdited(0 != (Integer) row2.get("is_edited"));

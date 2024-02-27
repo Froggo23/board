@@ -3,6 +3,11 @@ async function submitPost() {
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
 
+    if(!title || !content){
+        alert("fill in title or content")
+        return
+    }
+
     // Prepare the data to send
     const data = {
         title: title,

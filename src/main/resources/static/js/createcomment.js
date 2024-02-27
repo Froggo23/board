@@ -2,6 +2,11 @@ async function submitComment() {
     const content = document.getElementById('comment').value;
     const postId = window.location.pathname.split('/').pop(); // Extracts the post ID from the URL
 
+    if(!content){
+        alert("fill in the comment")
+        return
+    }
+
     // Prepare the data to send
     const comment = {
         postId: postId,

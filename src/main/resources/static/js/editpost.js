@@ -39,12 +39,18 @@ async function editPost() {
     const content = document.getElementById('content').value;
     const id = document.getElementById('id').getAttribute('post-id')
 
+    if(!title || !content){
+        alert("fill in title or content")
+        return
+    }
+
     // Prepare the data to send
     const data = {
         title: title,
         content: content,
         id: id
     };
+
 
 
     try {

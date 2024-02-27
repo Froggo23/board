@@ -175,11 +175,20 @@ public class RestfulController {
         }
         String content = comment.getContent();
         Integer postId = comment.getPostId();
-        String sql = "INSERT INTO titan.comments (author, content, post_id) VALUES (' "+ author+ "  ','"+ content +"', "+ postId +")";
+        String sql = "INSERT INTO titan.comments (author, content, post_id) VALUES ('"+ author+ "','"+ content +"', "+ postId +")";
         jdbcTemplate.execute(sql);
         return "success";
     }
-
+    @PostMapping("/delete-comment")
+    public String deleteComment(@RequestBody Comment comment, HttpServletRequest request) {
+        String loginIdCookieValue = WebUtils.getCookie(request, "login_id").getValue();
+        if (!loginIdCookieValue.equals(comment.getAuthor())){
+            return "failed";
+        }
+        String sql = "DELETE FROM titan.comments WHERE id = " + comment.getId();
+        jdbcTemplate.execute(sql);
+        return "success";
+    }
 
 
 }

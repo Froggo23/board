@@ -5,6 +5,7 @@
     <link href="/css/cyberpunk.css" rel="stylesheet">
     <link href="/css/createpost.css" rel="stylesheet">
     <script src="/js/createcomment.js"></script>
+    <script src="/js/deletecomment.js"></script>
 </head>
 <body>
 
@@ -32,6 +33,7 @@
         <div style="margin-bottom: 20px;">
             <p class="comment-author-date" th:text="${comment.author} + ' : ' + ${#dates.format(comment.commentDate, 'yyyy-MM-dd')}"></p>
             <div class="comment-content-box">
+                <img src="/img/deletebutton.png" th:author="${comment.author}" th:comment-id="${comment.id}" onclick="deleteComment(this)" class="delete-icon"/>
                 <p th:text="${comment.content}"></p>
             </div>
         </div>
