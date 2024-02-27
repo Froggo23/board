@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
@@ -45,6 +46,7 @@ public class BulletinBoardController {
             // Spring returns BigDecimal, need convert
             post.setPostDate((Date) row.get("post_date"));
             post.setContent(((String) row.get("content")));
+            post.setEdited(0 != (Integer) row.get("is_edited"));
             postList.add(post);
         }
 
@@ -82,9 +84,45 @@ public class BulletinBoardController {
         post.setTitle((String) row.get("title"));
         post.setContent(((String) row.get("content")));
         model.addAttribute("post", post);
+        model.addAttribute("postId", postId);
 
         return "editpost";
     }
 
 
+    @GetMapping("/view-post/{id}")
+    public String view(Model model, @PathVariable("id") int id, HttpServletRequest request) {
+        Cookie loginCookie = WebUtils.getCookie(request, "login_id");
+        if (loginCookie == null) {
+            return "redirect:/login";
+        }
+
+        String sql = "select * from titan.posts where id =" + id;
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        Post post = new Post();
+        Map<String, Object> row = rows.get(0);
+        post.setTitle((String) row.get("title"));
+        post.setContent(((String) row.get("content")));
+        model.addAttribute("post", post);
+        model.addAttribute("postId", id);
+
+        String sql2 = "SELECT titan.comments.author, titan.comments.content, titan.comments.comment_date, titan.comments.is_edited FROM titan.comments JOIN titan.posts ON titan.comments.post_id = titan.posts.id WHERE titan.posts.id =" + id + " ORDER BY titan.comments.id DESC";
+
+        List<Comment> commentList = new ArrayList<>();
+
+        List<Map<String, Object>> rows2 = jdbcTemplate.queryForList(sql2);
+
+        for (Map row2 : rows2) {
+            Comment comment = new Comment();
+
+            comment.setAuthor((String) row2.get("author"));
+            comment.setCommentDate((Date) row2.get("comment_date"));
+            comment.setContent(((String) row2.get("content")));
+            comment.setEdited(0 != (Integer) row2.get("is_edited"));
+            commentList.add(comment);
+        }
+
+        model.addAttribute("commentList", commentList);
+        return "viewpost";
+    }
 }

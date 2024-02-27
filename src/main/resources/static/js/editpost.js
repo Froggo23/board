@@ -1,4 +1,4 @@
-function editPost(buttonElement) {
+function openEditPost(buttonElement) {
     console.log(buttonElement)
     var postId = buttonElement.getAttribute('post-id');
     var postAuthor = buttonElement.getAttribute('post-author');
@@ -32,4 +32,46 @@ function editPost(buttonElement) {
         console.error('Error during fetch operation:', error);
         // Handle fetch errors
     });
+}
+
+async function editPost() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    const id = document.getElementById('id').getAttribute('post-id')
+
+    // Prepare the data to send
+    const data = {
+        title: title,
+        content: content,
+        id: id
+    };
+
+
+    try {
+        // Send the POST request
+        const response = await fetch('/submitEdit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const responseBody = await response.text();
+
+        if (response.ok && responseBody === "success") {
+            alert('Post edited successfully!');
+            window.location.href = "/board";
+        } else if (response.ok && responseBody === "needs login") {
+            alert('Needs to edit again!');
+            window.location.href = "/login";
+        }
+        else {
+            alert('Error editing post. Please try again.');
+        }
+    } catch (error) {
+        alert('Error editing post. Please check your connection and try again.');
+        //    }
+
+    }
 }

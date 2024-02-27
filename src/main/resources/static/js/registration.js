@@ -69,7 +69,6 @@ async function submitRegi() {
 };
 
 let usernameCheckTimeout; // Timeout variable
-
 async function validateUsername() {
     clearTimeout(usernameCheckTimeout); // Clear previous timeout
     usernameCheckTimeout = setTimeout(async () => {

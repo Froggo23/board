@@ -1,11 +1,5 @@
 async function submitPost() {
-    // Get the button element
-    const button = document.querySelector('button');
 
-    // Add the exploding class to start the animation
-    button.classList.add('exploding');
-
-    // Get values from the input fields
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
 

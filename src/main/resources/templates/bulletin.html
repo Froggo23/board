@@ -20,12 +20,18 @@
         <button>Create a Post!</button>
     </a>
 
+
     <div th:each="post : ${postList}" class="post">
         <img src="/img/deletebutton.png" th:post-id="${post.id}" th:post-author="${post.author}" onclick="deletePost(this)" class="delete-icon"/>
-        <img src="/img/editbutton.png" th:post-id="${post.id}" th:post-author="${post.author}" onclick="editPost(this)" class="delete-icon"/>
-        <h2 th:text="${post.title}"></h2>
+        <img src="/img/editbutton.png" th:post-id="${post.id}" th:post-author="${post.author}" onclick="openEditPost(this)" class="delete-icon"/>
+        <img src="/img/check.png" th:if="${post.isEdited}" class="delete-icon"/>
+        <a th:href="@{/view-post/{id}(id=${post.id})}">
+            <h2 th:text="${post.title}"></h2>
+        </a>
+
         <p th:text="'Posted by ' + ${post.author} + ' on ' + ${#dates.format(post.postDate, 'yyyy-MM-dd')}"></p>
-        <p th:text="${post.content}"></p>
+            <p th:text="${post.content}"></p>
+
     </div>
 
 

@@ -3,14 +3,18 @@ package com.choe.board;
 import lombok.Data;
 
 import java.util.Date;
+
 @Data
-public class Post {
+public class Comment {
 
     int id;
-    String title;
-    String author;
-    Date postDate;
+
+    int postId;
     String content;
+    String author;
+    Date commentDate;
+
+
 
     boolean isEdited;
 

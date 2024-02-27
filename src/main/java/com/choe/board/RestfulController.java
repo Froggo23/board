@@ -96,6 +96,17 @@ public class RestfulController {
         return "success";
     }
 
+    @PostMapping("/submitEdit")
+    public String edit(@RequestBody Post post) {
+        String title = post.getTitle();
+        String content = post.getContent();
+        int id = post.getId();
+
+        String sql = "update titan.posts SET is_edited = 1, title = '"+ title +"', content = '"+ content +"' WHERE id = "+ id;
+        jdbcTemplate.execute(sql);
+        return "success";
+    }
+
     @PostMapping("/regiSubmit")
     public String submit2(@RequestBody User user) {
         String sql = "insert into titan.user(username, password, phone, email) values ('" + user.getUsername() + "', '" + user.getPassword() + "', ' " + user.getPhone() + "', '" + user.getEmail() + "')";
@@ -151,5 +162,24 @@ public class RestfulController {
         }
         return "success";
     }
+
+    @PostMapping("/submitComment")
+    public String createComment(@RequestBody Comment comment, HttpServletRequest request) {
+//        String author = post.getAuthor();
+        Cookie loginCookie = WebUtils.getCookie(request, "login_id");
+        String author;
+        if (loginCookie != null) {
+            author = loginCookie.getValue();
+        } else {
+            return "needs login";
+        }
+        String content = comment.getContent();
+        Integer postId = comment.getPostId();
+        String sql = "INSERT INTO titan.comments (author, content, post_id) VALUES (' "+ author+ "  ','"+ content +"', "+ postId +")";
+        jdbcTemplate.execute(sql);
+        return "success";
+    }
+
+
 
 }

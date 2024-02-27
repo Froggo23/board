@@ -14,3 +14,37 @@ input[type="text"], textarea {
     border-radius: 5px;
     margin-bottom: 10px;
 }
+
+/* Additional CSS for Comments Section */
+.comment-author-date {
+    color: #00ffea; /* neon color for author-date */
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.comment-content-box {
+    border: 1px solid #ccc;
+    background: #222; /* dark background for content */
+    color: white; /* text color */
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #00ffea; /* Neon color */
+    color: #000; /* Text color */
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+button[type="submit"]:hover {
+    background-color: #008CBA; /* Darker shade for hover effect */
+}
+
+
+/* Ensure the above classes are used in the Thymeleaf template */

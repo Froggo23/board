@@ -9,6 +9,7 @@
 <body>
 
 <h2>Edit your Post!</h2>
+<div id="id" th:post-id="${postId}"></div>
 
 <!-- Use Thymeleaf to bind the title field -->
 <label for="title">Title:</label> <br>
@@ -18,7 +19,7 @@
 <label for="content">Content:</label> <br>
 <textarea cols="30" id="content" name="content" required rows="10" th:text="${post.content}"> </textarea><br><br>
 
-<button onclick="submitPost()">Submit</button>
+<button onclick="editPost()">Edit</button>
 
 </body>
 </html>
