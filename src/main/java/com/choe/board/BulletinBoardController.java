@@ -39,6 +39,8 @@ public class BulletinBoardController {
 
         for (Map row : rows) {
             Post post = new Post();
+            Post post2 = new Post();
+
 
             post.setId(((Integer) row.get("id")));
             post.setTitle((String) row.get("title"));
