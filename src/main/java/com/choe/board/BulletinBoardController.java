@@ -48,7 +48,7 @@ public class BulletinBoardController {
             // Spring returns BigDecimal, need convert
             post.setPostDate((Date) row.get("post_date"));
             post.setContent(((String) row.get("content")));
-            post.setEdited(0 != (Integer) row.get("is_edited"));
+            post.setEdited((Boolean)row.get("is_edited"));
             postList.add(post);
         }
 
@@ -121,7 +121,8 @@ public class BulletinBoardController {
             comment.setId((Integer) row2.get("id"));
             comment.setCommentDate((Date) row2.get("comment_date"));
             comment.setContent(((String) row2.get("content")));
-            comment.setEdited(0 != (Integer) row2.get("is_edited"));
+            comment.setEdited((Boolean)row.get("is_edited"));
+
             commentList.add(comment);
         }
 
