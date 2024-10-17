@@ -12,8 +12,6 @@ public class Post {
     Date postDate;
     String content;
 
-    boolean isEdited;
-
-
+    Boolean isEdited;
 
 }

@@ -25,7 +25,7 @@ public class BulletinBoardController {
     @GetMapping("/board")
     public String board(Model model, @RequestParam(name = "page", defaultValue = "1") int page, HttpServletRequest request) {
         Cookie loginCookie = WebUtils.getCookie(request, "login_id");
-
+        
         if (loginCookie == null) {
             return "redirect:/login";
         }
@@ -48,8 +48,9 @@ public class BulletinBoardController {
             // Spring returns BigDecimal, need convert
             post.setPostDate((Date) row.get("post_date"));
             post.setContent(((String) row.get("content")));
-            post.setEdited((Boolean)row.get("is_edited"));
+            post.setIsEdited((Boolean)row.get("is_edited"));
             postList.add(post);
+
         }
 
         int totalPosts = jdbcTemplate.queryForObject("select count(*) from titan.posts", Integer.class);
