@@ -15,7 +15,18 @@
 </head>
 <body>
 <div class="container">
-    <h1><i>THE Community</i></h1>
+    <div class="header">
+        <a href="/board">
+            <h1><i>THE Community</i></h1>
+        </a>
+        <div class="search-container">
+            <form action="/board" method="get">
+                <input type="text" name="query" placeholder="Search..." class="search-bar">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+    </div>
+
 
     <a href="/post">
         <button>Create a Post!</button>

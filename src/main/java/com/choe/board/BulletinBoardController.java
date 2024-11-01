@@ -23,45 +23,73 @@ public class BulletinBoardController {
     JdbcTemplate jdbcTemplate;
 
     @GetMapping("/board")
-    public String board(Model model, @RequestParam(name = "page", defaultValue = "1") int page, HttpServletRequest request) {
+    public String board(Model model,
+                        @RequestParam(name = "page", defaultValue = "1") int page,
+                        @RequestParam(name = "query", required = false) String query,
+                        HttpServletRequest request) {
         Cookie loginCookie = WebUtils.getCookie(request, "login_id");
-        
+
         if (loginCookie == null) {
             return "redirect:/login";
         }
+
         int count = 10;
         int start = (page - 1) * count;
-        String sql = "select * from titan.posts ORDER BY id DESC limit " + start + ", " + count;
-
         List<Post> postList = new ArrayList<>();
+        String sql;
+        int totalPosts;
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        if (query != null && !query.isEmpty()) {
+            // Construct SQL with search functionality directly in the string
+            sql = "SELECT * FROM titan.posts WHERE title LIKE '%" + query + "%' OR content LIKE '%" + query + "%' ORDER BY id DESC LIMIT " + start + ", " + count;
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 
-        for (Map row : rows) {
-            Post post = new Post();
-            Post post2 = new Post();
+            for (Map<String, Object> row : rows) {
+                Post post = new Post();
+                post.setId((Integer) row.get("id"));
+                post.setTitle((String) row.get("title"));
+                post.setAuthor((String) row.get("author"));
+                post.setPostDate((Date) row.get("post_date"));
+                post.setContent((String) row.get("content"));
+                post.setIsEdited((Boolean) row.get("is_edited"));
+                postList.add(post);
+            }
 
+            // Count total posts for pagination based on search
+            String countQuery = "SELECT COUNT(*) FROM titan.posts WHERE title LIKE '%" + query + "%' OR content LIKE '%" + query + "%'";
+            totalPosts = jdbcTemplate.queryForObject(countQuery, Integer.class);
 
-            post.setId(((Integer) row.get("id")));
-            post.setTitle((String) row.get("title"));
-            post.setAuthor((String) row.get("author"));
-            // Spring returns BigDecimal, need convert
-            post.setPostDate((Date) row.get("post_date"));
-            post.setContent(((String) row.get("content")));
-            post.setIsEdited((Boolean)row.get("is_edited"));
-            postList.add(post);
+        } else {
+            // Default SQL without search
+            sql = "SELECT * FROM titan.posts ORDER BY id DESC LIMIT " + start + ", " + count;
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 
+            for (Map<String, Object> row : rows) {
+                Post post = new Post();
+                post.setId((Integer) row.get("id"));
+                post.setTitle((String) row.get("title"));
+                post.setAuthor((String) row.get("author"));
+                post.setPostDate((Date) row.get("post_date"));
+                post.setContent((String) row.get("content"));
+                post.setIsEdited((Boolean) row.get("is_edited"));
+                postList.add(post);
+            }
+
+            totalPosts = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM titan.posts", Integer.class);
         }
 
-        int totalPosts = jdbcTemplate.queryForObject("select count(*) from titan.posts", Integer.class);
         int totalPages = (int) Math.ceil((double) totalPosts / count);
-
 
         model.addAttribute("postList", postList);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
+        model.addAttribute("query", query);
+
         return "bulletin";
     }
+
+
+
 
     @GetMapping("/post")
     public String post(HttpServletRequest request) {
