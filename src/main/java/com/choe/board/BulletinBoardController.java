@@ -89,8 +89,6 @@ public class BulletinBoardController {
     }
 
 
-
-
     @GetMapping("/post")
     public String post(HttpServletRequest request) {
         Cookie loginCookie = WebUtils.getCookie(request, "login_id");

@@ -21,7 +21,7 @@ label {
 input[type="text"], input[type="password"], input[type="email"], input[type="tel"], textarea, .post {
     width: 100%;
     padding: 10px;
-    margin: 5px 0 16px 0;
+    margin: auto;
     display: inline-block;
     border: none;
     background: #222;
@@ -75,8 +75,8 @@ a h1:hover {
     align-items: center;
 }
 
-.search-bar {
-    width: 200px; /* Adjust width as needed */
+#search-bar {
+    width: 250px; /* Adjust width as needed */
     padding: 8px;
     border: none;
     background: #222;
@@ -84,7 +84,7 @@ a h1:hover {
     border-bottom: 2px solid #00ffea; /* neon underline */
 }
 
-.search-bar:focus {
+#search-bar:focus {
     outline: none;
     border-bottom: 3px solid #ff00ff; /* brighter neon on focus */
 }
