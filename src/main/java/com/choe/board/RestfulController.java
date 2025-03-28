@@ -20,7 +20,6 @@ public class RestfulController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-
     @GetMapping("/test")
     public String test() {
         List<Integer> list = new ArrayList<>();
@@ -44,17 +43,15 @@ public class RestfulController {
         return map;
     }
 
-
     @GetMapping("/test3")
     public String test3() {
-        String str = jdbcTemplate.queryForObject("select reserve_date from titan.hwang where name = 'son'", String.class);
+        String str = jdbcTemplate.queryForObject("SELECT reserve_date FROM titan.hwang WHERE name = 'son'", String.class);
         return str;
     }
 
-
     @GetMapping("/test4")
     public List<Hwang> test4() {
-        String sql = "select * from titan.hwang";
+        String sql = "SELECT * FROM titan.hwang";
 
         List<Hwang> hwangList = new ArrayList<>();
 
@@ -62,10 +59,8 @@ public class RestfulController {
 
         for (Map row : rows) {
             Hwang obj = new Hwang();
-
             obj.setId(((Integer) row.get("id")));
             obj.setName((String) row.get("name"));
-            // Spring returns BigDecimal, need convert
             obj.setReserveDate(((String) row.get("reserve_date")));
             obj.setRoomNum(((Integer) row.get("room_num")));
             hwangList.add(obj);
@@ -74,10 +69,8 @@ public class RestfulController {
         return hwangList;
     }
 
-
     @PostMapping("/submit")
     public String submit(@RequestBody Post post, HttpServletRequest request) {
-//        String author = post.getAuthor();
         Cookie loginCookie = WebUtils.getCookie(request, "login_id");
         String author;
         if (loginCookie != null) {
@@ -91,7 +84,7 @@ public class RestfulController {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String postDate = today.format(formatter);
-        String sql = "insert into titan.posts(title, author, content, post_date) values ('" + title + "', '" + author + "', ' " + content + "', '" + postDate + "')";
+        String sql = "INSERT INTO titan.posts(title, author, content, post_date) VALUES ('" + title + "', '" + author + "', '" + content + "', '" + postDate + "')";
         jdbcTemplate.execute(sql);
         return "success";
     }
@@ -102,32 +95,31 @@ public class RestfulController {
         String content = post.getContent();
         int id = post.getId();
 
-        String sql = "update titan.posts SET is_edited = 1, title = '"+ title +"', content = '"+ content +"' WHERE id = "+ id;
+        String sql = "UPDATE titan.posts SET is_edited = TRUE, title = '" + title + "', content = '" + content + "' WHERE id = " + id;
         jdbcTemplate.execute(sql);
         return "success";
     }
 
     @PostMapping("/regiSubmit")
     public String submit2(@RequestBody User user) {
-        String sql = "insert into titan.user(username, password, phone, email) values ('" + user.getUsername() + "', '" + user.getPassword() + "', ' " + user.getPhone() + "', '" + user.getEmail() + "')";
+        String sql = "INSERT INTO titan.\"user\"(username, password, phone, email) VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getPhone() + "', '" + user.getEmail() + "')";
         jdbcTemplate.execute(sql);
         return "success";
     }
 
     @PostMapping("/checkDuplicate")
     public String submit3(@RequestBody User user) {
-        String sql = "select * from titan.user where username = '" + user.getUsername() + "'";
+        String sql = "SELECT * FROM titan.\"user\" WHERE username = '" + user.getUsername() + "'";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         if (rows.size() >= 1) {
             return "exists";
         }
-
         return "success";
     }
 
     @PostMapping("/checkLogin")
     public String submit4(@RequestBody User user) {
-        String sql = "select * from titan.user where username = '" + user.getUsername() + "'";
+        String sql = "SELECT * FROM titan.\"user\" WHERE username = '" + user.getUsername() + "'";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         if (rows.size() == 0) {
             return "error";
@@ -138,15 +130,13 @@ public class RestfulController {
         if (!Objects.equals(userRes.getPassword(), user.getPassword())) {
             return "error";
         }
-
         return "success";
     }
 
-    // Inside your Spring controller class
     @PostMapping("/delete-post")
     public String deletePost(@RequestBody Post post, HttpServletRequest request) {
         String loginIdCookieValue = WebUtils.getCookie(request, "login_id").getValue();
-        if (!loginIdCookieValue.equals(post.getAuthor())){
+        if (!loginIdCookieValue.equals(post.getAuthor())) {
             return "failed";
         }
         String sql = "DELETE FROM titan.posts WHERE id = " + post.getId();
@@ -157,7 +147,7 @@ public class RestfulController {
     @PostMapping("/is-editable")
     public String isEditable(@RequestBody Post post, HttpServletRequest request) {
         String loginIdCookieValue = WebUtils.getCookie(request, "login_id").getValue();
-        if (!loginIdCookieValue.equals(post.getAuthor())){
+        if (!loginIdCookieValue.equals(post.getAuthor())) {
             return "failed";
         }
         return "success";
@@ -165,7 +155,6 @@ public class RestfulController {
 
     @PostMapping("/submitComment")
     public String createComment(@RequestBody Comment comment, HttpServletRequest request) {
-//        String author = post.getAuthor();
         Cookie loginCookie = WebUtils.getCookie(request, "login_id");
         String author;
         if (loginCookie != null) {
@@ -175,20 +164,19 @@ public class RestfulController {
         }
         String content = comment.getContent();
         Integer postId = comment.getPostId();
-        String sql = "INSERT INTO titan.comments (author, content, post_id) VALUES ('"+ author+ "','"+ content +"', "+ postId +")";
+        String sql = "INSERT INTO titan.comments (author, content, post_id) VALUES ('" + author + "','" + content + "', " + postId + ")";
         jdbcTemplate.execute(sql);
         return "success";
     }
+
     @PostMapping("/delete-comment")
     public String deleteComment(@RequestBody Comment comment, HttpServletRequest request) {
         String loginIdCookieValue = WebUtils.getCookie(request, "login_id").getValue();
-        if (!loginIdCookieValue.equals(comment.getAuthor())){
+        if (!loginIdCookieValue.equals(comment.getAuthor())) {
             return "failed";
         }
         String sql = "DELETE FROM titan.comments WHERE id = " + comment.getId();
         jdbcTemplate.execute(sql);
         return "success";
     }
-
-
 }
