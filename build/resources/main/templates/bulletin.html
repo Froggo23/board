@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/cyberpunk.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bulletin.css">
+    <script src="/js/deletepost.js"></script>
+    <script src="/js/editpost.js"></script>
+    <title>THE Community</title>
+    <script>
+
+    </script>
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <a href="/board">
+            <h1><i>THE Community</i></h1>
+        </a>
+        <div class="search-container">
+            <form action="/board" method="get">
+                <input type="text" name="query" placeholder="Search..." id="search-bar">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+    </div>
+
+
+    <a href="/post">
+        <button>Create a Post!</button>
+    </a>
+
+
+    <div th:each="post : ${postList}" class="post">
+        <img src="/img/deletebutton.png" th:post-id="${post.id}" th:post-author="${post.author}"
+             onclick="deletePost(this)" class="delete-icon"/>
+        <img src="/img/editbutton.png" th:post-id="${post.id}" th:post-author="${post.author}"
+             onclick="openEditPost(this)" class="delete-icon"/>
+        <img src="/img/check.png" th:if="${post.isEdited}" class="delete-icon"/>
+        <a th:href="@{/view-post/{id}(id=${post.id})}">
+            <h2 th:text="${post.title}"></h2>
+        </a>
+
+        <p th:text="'Posted by ' + ${post.author} + ' on ' + ${#dates.format(post.postDate, 'yyyy-MM-dd')}"></p>
+        <p th:text="${post.content}"></p>
+
+    </div>
+
+
+    <div class="pagination">
+        <th:block th:if="${totalPages > 1}">
+            <th:block
+                    th:each="page : ${#numbers.sequence(currentPage - 4 <= 0 ? 1 : currentPage - 4, currentPage + 4 >= totalPages ? totalPages : currentPage + 4)}">
+                <a th:href="@{/board(page=${page})}" th:text="${page}"
+                   th:class="${page == currentPage} ? 'active' : ''"></a>
+            </th:block>
+        </th:block>
+    </div>
+
+    <button id="logoutButton"
+            onclick="document.cookie = 'login_id=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'; window.location.href = '/login';"
+            style="padding: 10px; background-color: #451fafdd; color: #ffffff; border: none; cursor: pointer; border-radius: 5px;">
+        Logout
+    </button>
+</div>
+</body>
+</html>

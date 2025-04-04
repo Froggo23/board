@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cyberpunk Registration Page</title>
+    <link href="/css/cyberpunk.css" rel="stylesheet" type="text/css">
+    <link href="/css/registration.css" rel="stylesheet">
+    <script src="/js/registration.js"></script>
+</head>
+<body>
+<div class="registration-container">
+    <h2>Register</h2>
+    <div class="input-group">
+        <input id="username" onkeyup="validateUsername()" required type="text">
+        <span id="usernameStatus"></span>
+        <label for="username">Username</label>
+    </div>
+    <div class="input-group">
+        <input id="password" required type="password">
+        <label for="password">Password</label>
+    </div>
+    <div class="input-group">
+        <input id="confirmPassword" required type="password">
+        <label for="confirmPassword">Confirm Password</label>
+    </div>
+    <div class="input-group">
+        <input id="email" required type="email">
+        <label for="email">Email</label>
+    </div>
+    <div class="input-group">
+        <input id="phoneNumber" required type="text">
+        <label for="phoneNumber">Phone Number</label>
+    </div>
+    <button class="register-btn" onclick="submitRegi()" type="submit">Register</button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View the Post!</title>
+    <link href="/css/cyberpunk.css" rel="stylesheet">
+    <link href="/css/createpost.css" rel="stylesheet">
+    <script src="/js/createcomment.js"></script>
+    <script src="/js/deletecomment.js"></script>
+</head>
+<body>
+
+<h2 th:text="${post.title}">Post Title</h2>
+<div id="id" th:post-id="${postId}"></div>
+
+<label for="content">Content:</label> <br>
+<textarea cols="30" id="content" name="content" readonly required rows="10" th:text="${post.content}">Post Content</textarea><br><br>
+
+<!-- Add a Comment Section -->
+<div style="margin-top: 20px;">
+    <h3 style="font-weight: bold; color: #00ffea; margin-bottom: 10px;">Add a Comment:</h3>
+    <textarea id="comment" rows="4" placeholder="Write your comment here..." required></textarea>
+    <button onclick="submitComment()">Post Comment</button>
+</div>
+
+
+<!-- Comments Section -->
+<div style="margin-top: 20px;">
+    <h3 style="font-weight: bold; color: #00ffea; margin-bottom: 10px;">Comments:</h3>
+    <div th:if="${commentList.empty}" style="color:#FFFFFF;">
+        <p>No comments yet.</p>
+    </div>
+    <div th:each="comment, iterStat : ${commentList}" th:unless="${commentList.empty}">
+        <div style="margin-bottom: 20px;">
+            <p class="comment-author-date" th:text="${comment.author} + ' : ' + ${#dates.format(comment.commentDate, 'yyyy-MM-dd')}"></p>
+            <div class="comment-content-box">
+                <img src="/img/deletebutton.png" th:author="${comment.author}" th:comment-id="${comment.id}" onclick="deleteComment(this)" class="delete-icon"/>
+                <p th:text="${comment.content}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
