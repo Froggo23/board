@@ -45,13 +45,13 @@ public class RestfulController {
 
     @GetMapping("/test3")
     public String test3() {
-        String str = jdbcTemplate.queryForObject("SELECT reserve_date FROM titan.hwang WHERE name = 'son'", String.class);
+        String str = jdbcTemplate.queryForObject("SELECT reserve_date FROM hwang WHERE name = 'son'", String.class);
         return str;
     }
 
     @GetMapping("/test4")
     public List<Hwang> test4() {
-        String sql = "SELECT * FROM titan.hwang";
+        String sql = "SELECT * FROM hwang";
 
         List<Hwang> hwangList = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class RestfulController {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String postDate = today.format(formatter);
-        String sql = "INSERT INTO titan.posts(title, author, content, post_date) VALUES ('" + title + "', '" + author + "', '" + content + "', '" + postDate + "')";
+        String sql = "INSERT INTO posts(title, author, content, post_date) VALUES ('" + title + "', '" + author + "', '" + content + "', '" + postDate + "')";
         jdbcTemplate.execute(sql);
         return "success";
     }
@@ -95,21 +95,21 @@ public class RestfulController {
         String content = post.getContent();
         int id = post.getId();
 
-        String sql = "UPDATE titan.posts SET is_edited = TRUE, title = '" + title + "', content = '" + content + "' WHERE id = " + id;
+        String sql = "UPDATE posts SET is_edited = TRUE, title = '" + title + "', content = '" + content + "' WHERE id = " + id;
         jdbcTemplate.execute(sql);
         return "success";
     }
 
     @PostMapping("/regiSubmit")
     public String submit2(@RequestBody User user) {
-        String sql = "INSERT INTO titan.\"user\"(username, password, phone, email) VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getPhone() + "', '" + user.getEmail() + "')";
+        String sql = "INSERT INTO \"user\"(username, password, phone, email) VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getPhone() + "', '" + user.getEmail() + "')";
         jdbcTemplate.execute(sql);
         return "success";
     }
 
     @PostMapping("/checkDuplicate")
     public String submit3(@RequestBody User user) {
-        String sql = "SELECT * FROM titan.\"user\" WHERE username = '" + user.getUsername() + "'";
+        String sql = "SELECT * FROM \"user\" WHERE username = '" + user.getUsername() + "'";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         if (rows.size() >= 1) {
             return "exists";
@@ -119,7 +119,7 @@ public class RestfulController {
 
     @PostMapping("/checkLogin")
     public String submit4(@RequestBody User user) {
-        String sql = "SELECT * FROM titan.\"user\" WHERE username = '" + user.getUsername() + "'";
+        String sql = "SELECT * FROM \"user\" WHERE username = '" + user.getUsername() + "'";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         if (rows.size() == 0) {
             return "error";
@@ -139,7 +139,7 @@ public class RestfulController {
         if (!loginIdCookieValue.equals(post.getAuthor())) {
             return "failed";
         }
-        String sql = "DELETE FROM titan.posts WHERE id = " + post.getId();
+        String sql = "DELETE FROM posts WHERE id = " + post.getId();
         jdbcTemplate.execute(sql);
         return "success";
     }
@@ -164,7 +164,7 @@ public class RestfulController {
         }
         String content = comment.getContent();
         Integer postId = comment.getPostId();
-        String sql = "INSERT INTO titan.comments (author, content, post_id) VALUES ('" + author + "','" + content + "', " + postId + ")";
+        String sql = "INSERT INTO comments (author, content, post_id) VALUES ('" + author + "','" + content + "', " + postId + ")";
         jdbcTemplate.execute(sql);
         return "success";
     }
@@ -175,8 +175,9 @@ public class RestfulController {
         if (!loginIdCookieValue.equals(comment.getAuthor())) {
             return "failed";
         }
-        String sql = "DELETE FROM titan.comments WHERE id = " + comment.getId();
+        String sql = "DELETE FROM comments WHERE id = " + comment.getId();
         jdbcTemplate.execute(sql);
         return "success";
     }
+
 }

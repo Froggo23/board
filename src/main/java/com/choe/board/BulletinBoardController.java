@@ -40,7 +40,7 @@ public class BulletinBoardController {
         int totalPosts;
 
         if (query != null && !query.isEmpty()) {
-            sql = "SELECT * FROM titan.posts WHERE title ILIKE '%" + query + "%' OR content ILIKE '%" + query + "%' ORDER BY id DESC LIMIT " + count + " OFFSET " + start;
+            sql = "SELECT * FROM posts WHERE title ILIKE '%" + query + "%' OR content ILIKE '%" + query + "%' ORDER BY id DESC LIMIT " + count + " OFFSET " + start;
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 
             for (Map<String, Object> row : rows) {
@@ -54,11 +54,11 @@ public class BulletinBoardController {
                 postList.add(post);
             }
 
-            String countQuery = "SELECT COUNT(*) FROM titan.posts WHERE title ILIKE '%" + query + "%' OR content ILIKE '%" + query + "%'";
+            String countQuery = "SELECT COUNT(*) FROM posts WHERE title ILIKE '%" + query + "%' OR content ILIKE '%" + query + "%'";
             totalPosts = jdbcTemplate.queryForObject(countQuery, Integer.class);
 
         } else {
-            sql = "SELECT * FROM titan.posts ORDER BY id DESC LIMIT " + count + " OFFSET " + start;
+            sql = "SELECT * FROM posts ORDER BY id DESC LIMIT " + count + " OFFSET " + start;
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 
             for (Map<String, Object> row : rows) {
@@ -72,7 +72,7 @@ public class BulletinBoardController {
                 postList.add(post);
             }
 
-            totalPosts = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM titan.posts", Integer.class);
+            totalPosts = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM posts", Integer.class);
         }
 
         int totalPages = (int) Math.ceil((double) totalPosts / count);
@@ -102,7 +102,7 @@ public class BulletinBoardController {
             return "redirect:/login";
         }
 
-        String sql = "SELECT * FROM titan.posts WHERE id = " + postId;
+        String sql = "SELECT * FROM posts WHERE id = " + postId;
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         Post post = new Post();
         Map<String, Object> row = rows.get(0);
@@ -121,7 +121,7 @@ public class BulletinBoardController {
             return "redirect:/login";
         }
 
-        String sql = "SELECT * FROM titan.posts WHERE id = " + id;
+        String sql = "SELECT * FROM posts WHERE id = " + id;
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         Post post = new Post();
         Map<String, Object> row = rows.get(0);
@@ -130,7 +130,7 @@ public class BulletinBoardController {
         model.addAttribute("post", post);
         model.addAttribute("postId", id);
 
-        String sql2 = "SELECT titan.comments.id, titan.comments.author, titan.comments.content, titan.comments.comment_date, titan.comments.is_edited FROM titan.comments JOIN titan.posts ON titan.comments.post_id = titan.posts.id WHERE titan.posts.id = " + id + " ORDER BY titan.comments.id DESC";
+        String sql2 = "SELECT comments.id, comments.author, comments.content, comments.comment_date, comments.is_edited FROM comments JOIN posts ON comments.post_id = posts.id WHERE posts.id = " + id + " ORDER BY comments.id DESC";
 
         List<Comment> commentList = new ArrayList<>();
 

@@ -52,7 +52,7 @@
     <div class="pagination">
         <th:block th:if="${totalPages > 1}">
             <th:block
-                    th:each="page : ${#numbers.sequence(currentPage - 4 <= 0 ? 1 : currentPage - 4, currentPage + 4 >= totalPages ? totalPages : currentPage + 4)}">
+                    th:each= "page : ${#numbers.sequence(currentPage - 4 <= 0 ? 1 : currentPage - 4, currentPage + 4 >= totalPages ? totalPages : currentPage + 4)}">
                 <a th:href="@{/board(page=${page})}" th:text="${page}"
                    th:class="${page == currentPage} ? 'active' : ''"></a>
             </th:block>
